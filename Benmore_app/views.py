@@ -56,25 +56,14 @@ class FilteredProjectList(generics.ListAPIView):
         if search_query:
             queryset = queryset.filter(name__icontains=search_query) | queryset.filter(description__icontains=search_query)
         return queryset
-
-    # filter tasks by task name or description if search query is provided in the query parameters.
-
+    
     def get_queryset(self):
+        "Filter projects by status if status is provided in the query parameters."
         queryset = super().get_queryset()
-        search_query = self.request.query_params.get('search', None)
-        if search_query:
-            queryset = queryset.filter(name_of_task__icontains=search_query) | queryset.filter(description__icontains=search_query)
+        status = self.request.query_params.get('status', None)
+        if status:
+            queryset = queryset.filter(status=status)
         return queryset
-
-
-
-    # def get_queryset(self):
-    #     "Filter projects by status if status is provided in the query parameters."
-    #     queryset = super().get_queryset()
-    #     status = self.request.query_params.get('status', None)
-    #     if status:
-    #         queryset = queryset.filter(status=status)
-    #     return queryset
 
 class TaskCreateView(generics.CreateAPIView):
     queryset = Task.objects.all()
