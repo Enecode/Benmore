@@ -12,7 +12,7 @@ class ProjectListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
-        # Check for unique project name before saving
+       
         if Project.objects.filter(name=serializer.validated_data['name']).exists():
             raise serializers.ValidationError('Project with that name already exists.')
         serializer.save()
@@ -49,7 +49,6 @@ class FilteredProjectList(generics.ListAPIView):
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'description']
 
-    # Filter projects by name or description if search query is provided in the query parameters.
     def get_queryset(self):
         queryset = super().get_queryset()
         search_query = self.request.query_params.get('search', None)
