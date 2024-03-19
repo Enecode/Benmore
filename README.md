@@ -11,7 +11,7 @@ This is a project to create a simple web application that allows users to create
 
 1. Clone the repository
    ```bash
-    git clone https://github.com/<Your_username>/Benmore.git
+    git clone https://github.com/enecode/Benmore.git
     ```
 2. Create a virtual environment and activate it: 
 - Linux and macOS
